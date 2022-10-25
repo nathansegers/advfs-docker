@@ -1,0 +1,22 @@
+version: '3.7'
+services:
+  client:
+    build: client
+    image: ghcr.io/nathansegers/advfs-demo/client:v1.0.0
+    ports:
+      - 5000:80
+      
+  backend-server:
+    build: server/demo-advfs # Pass the context to build, usually it's the current context.
+    image:  ghcr.io/nathansegers/advfs-demo/server:v1.2.3
+    entrypoint: ['node', 'server.js'] # The actual entrypoint of the container to run the server file
+    env_file:
+      - server/demo-advfs/.env.docker
+    ports:
+      - 3000:3000
+    volumes:
+      - type: bind
+        source: ./server/demo-advfs/src/config/service-account.json
+        target: /code/dist/config/service-account.json
+
+    
