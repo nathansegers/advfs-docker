@@ -18,5 +18,8 @@ services:
       - type: bind
         source: ./server/demo-advfs/src/config/service-account.json
         target: /code/dist/config/service-account.json
-
     
+  mongodb:
+    extends:
+      file: ./server/docker-compose.yml
+      service: mongodb
